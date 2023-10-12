@@ -1,5 +1,8 @@
 package com.nhnacademy.node;
 
+import lombok.extern.log4j.Log4j2;
+
+@Log4j2
 public class Node {
     String id;
     static int count;
@@ -10,6 +13,11 @@ public class Node {
 
     Node() {
         this(String.valueOf(System.currentTimeMillis()) + (++count));
+        log.trace("create node : {}", id);
+    }
+
+    public String getId() {
+        return id;
     }
 
     public int getCount() {
