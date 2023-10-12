@@ -10,7 +10,7 @@ import lombok.extern.log4j.Log4j2;
 
 
 @Log4j2
-public class InputNode extends ActiveNode{
+public class InputNode extends ActiveNode {
     Wire[] outputWires;
 
     InputNode(int count) {
@@ -47,6 +47,9 @@ public class InputNode extends ActiveNode{
         return outputWires[index];
     }
 
+    public int getOutputWireCount() {
+        return outputWires.length;
+    }
 
     void output(Message message) {
         log.trace("Message Out");
