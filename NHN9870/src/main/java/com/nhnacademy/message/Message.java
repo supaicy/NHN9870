@@ -1,4 +1,4 @@
 package com.nhnacademy.message;
 
-public class Message {
+public abstract class Message {
 }

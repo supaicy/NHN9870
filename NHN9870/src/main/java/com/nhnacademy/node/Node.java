@@ -14,6 +14,7 @@ public class Node {
 
     public int getCount() {
         return count;
+
     }
 
 }
