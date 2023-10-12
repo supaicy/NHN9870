@@ -1,9 +1,15 @@
 package com.nhnacademy.manageResource;
 
 public class Memory {
-    private long total;
-    private long usableMemory;
-    private double usingMemory;
+    public long getTotal() {
+        return Runtime.getRuntime().maxMemory();
+    }
 
+    public long getUsableMemory() {
+        return Runtime.getRuntime().totalMemory();
+    }
 
+    public long getUsingMemory() {
+        return getTotal()-getUsableMemory();
+    }
 }
