@@ -3,9 +3,14 @@ package com.nhnacademy.wire;
 import java.util.LinkedList;
 import java.util.Queue;
 import com.nhnacademy.message.Message;
+import lombok.Getter;
 
 public class Wire {
-        Queue<Message> messageQueue;
+    @Getter
+    private int count;
+    @Getter
+    private String id;
+    Queue<Message> messageQueue;
 
     public Wire() {
         messageQueue = new LinkedList<>();
@@ -22,4 +27,5 @@ public class Wire {
     public Message get() {
         return messageQueue.poll();
     }
+
 }
