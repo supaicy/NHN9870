@@ -1,4 +1,4 @@
 package com.nhnacademy.node;
 
-public class node {
+public class Node {
 }
