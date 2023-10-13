@@ -54,15 +54,6 @@ public class SocketInNode extends InputNode {
             }
         }
 
-        public void write(byte[] data){
-            try{
-                outputStream.write(data);
-                outputStream.flush();
-            } catch(IOException ignore){
-
-            }
-        }
-
         @Override
         public void run(){
             try{
