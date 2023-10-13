@@ -47,8 +47,8 @@ public class ActiveNode extends Node implements Runnable{
         this.interval = interval;
     }
 
-    void preprocess() {}
-    void postprocess() {}
+    protected void preprocess() {}
+    protected void postprocess() {}
 
     public void setDefaultInterval(int defaultInterval) {
         this.defaultInterval = defaultInterval;

@@ -10,7 +10,7 @@ import lombok.extern.log4j.Log4j2;
 
 
 @Log4j2
-public class InputNode extends ActiveNode {
+public abstract class InputNode extends ActiveNode {
     Wire[] outputWires;
 
     InputNode(int count) {

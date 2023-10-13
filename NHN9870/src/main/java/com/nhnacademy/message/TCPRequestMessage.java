@@ -6,9 +6,9 @@ public class TCPRequestMessage extends Message {
     byte[] payload;
     String senderId;
 
-    public TCPRequestMessage(String id, byte[] payload, int length) {
+    public TCPRequestMessage(String senderId, byte[] payload, int length) {
         this.payload = Arrays.copyOf(payload, length);
-        this.senderId = id;
+        this.senderId = senderId;
     }
 
     public String getSenderId() {
