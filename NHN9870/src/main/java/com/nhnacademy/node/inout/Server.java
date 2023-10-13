@@ -76,7 +76,7 @@ public class Server extends InOutNode{
         }
     }
 
-    int port = 1234;
+    int port = 1880;
     ServerSocket serverSocket;
     Map<String, Handler> handlerMap;
     Thread receiverThread;
