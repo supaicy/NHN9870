@@ -90,34 +90,34 @@ public class Server extends InOutNode{
         return handlerMap.get(id);
     }
 
-    void preprocess() {
-        try {
-            serverSocket = new ServerSocket(port);
-            receiverThread = new Thread(() -> {
-                while (!Thread.currentThread().isInterrupted()) {
-                    try {
-                        for (int i = 0; i < getInputWireCount(); i++) {
-                            if((getInputWire(i) != null) && getInputWire(i).hasMessage()) {
-                                Message message = getInputWire(i).get();
-                                if (message instanceof TCPResponseMessage) {
-                                    TCPResponseMessage responseMessage = (TCPResponseMessage) message;
-                                    Handler handler = getHandler(responseMessage.getSenderId());
+    protected void preprocess() {
+        // try {
+        //     serverSocket = new ServerSocket(port);
+        //     receiverThread = new Thread(() -> {
+        //         while (!Thread.currentThread().isInterrupted()) {
+        //             try {
+        //                 for (int i = 0; i < getInputWireCount(); i++) {
+        //                     if((getInputWire(i) != null) && getInputWire(i).hasMessage()) {
+        //                         Message message = getInputWire(i).get();
+        //                         if (message instanceof TCPResponseMessage) {
+        //                             TCPResponseMessage responseMessage = (TCPResponseMessage) message;
+        //                             Handler handler = getHandler(responseMessage.getSenderId());
 
-                                    handler.write(responseMessage.getPayload());
-                                }
-                            }
-                        }
-                        Thread.sleep(10);
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                    }
-                }
-            });
-            receiverThread.start();
-        } catch (IOException e) {
-            log.error(e.getMessage());
-            stop();
-        }
+        //                             handler.write(responseMessage.getPayload());
+        //                         }
+        //                     }
+        //                 }
+        //                 Thread.sleep(10);
+        //             } catch (InterruptedException e) {
+        //                 Thread.currentThread().interrupt();
+        //             }
+        //         }
+        //     });
+        //     receiverThread.start();
+        // } catch (IOException e) {
+        //     log.error(e.getMessage());
+        //     stop();
+        // }
     }
 
     void process() {

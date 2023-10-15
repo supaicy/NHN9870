@@ -1,25 +1,29 @@
 package com.nhnacademy.node.in;
 
 import com.nhnacademy.message.TCPRequestMessage;
-
+import lombok.extern.log4j.Log4j2;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
+@Log4j2
 public class SocketInNode extends InputNode {
 
-    static class Handler implements Runnable {
+    public static class Handler implements Runnable {
         static int count = 0;
         String id;
         Thread thread;
         Socket socket;
         BufferedInputStream inputStream;
         BufferedOutputStream outputStream;
+        BufferedWriter bufferedWriter;
         byte[] buffer;
         BiConsumer<byte[], Integer> callback;
         SocketInNode socketInNode;
@@ -54,6 +58,13 @@ public class SocketInNode extends InputNode {
             }
         }
 
+        public BufferedOutputStream getOutputStream() {
+            return outputStream;
+        }
+        
+        public BufferedWriter getBufferedWriter() {
+            return bufferedWriter;
+        }
         public void write(byte[] data){
             try{
                 outputStream.write(data);
@@ -66,8 +77,10 @@ public class SocketInNode extends InputNode {
         @Override
         public void run(){
             try{
+                bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
                 inputStream = new BufferedInputStream(socket.getInputStream());
                 outputStream = new BufferedOutputStream(socket.getOutputStream());
+                
 
                 while(!Thread.currentThread().isInterrupted()){
                     int length = inputStream.read(buffer);
@@ -88,7 +101,11 @@ public class SocketInNode extends InputNode {
 
     int port = 8080;
     ServerSocket serverSocket;
-    public static Map<String, Handler> handlerMap = new HashMap<>();
+    protected static Map<String, Handler> handlerMap = new HashMap<>();
+
+    public static Handler getHandler(String handlerId){
+        return handlerMap.get(handlerId);
+    }
 
     public SocketInNode(){
         super(1);
@@ -106,7 +123,9 @@ public class SocketInNode extends InputNode {
     @Override
     protected void main(){
         try{
+            
             Socket socket = serverSocket.accept();
+            log.info("socketAccept()");
             Handler handler = new Handler(socket, this);
             handler.setCallback((data, length) ->{
                 output(new TCPRequestMessage(handler.getId(), data, length));

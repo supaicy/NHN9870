@@ -3,11 +3,11 @@ package com.nhnacademy.message;
 import java.util.Arrays;
 
 public class TCPResponseMessage extends Message {
-    byte[] payload;
+    String payload;
     String senderId;
 
-    public TCPResponseMessage(String senderId, byte[] payload) {
-        this.payload = Arrays.copyOf(payload, payload.length);
+    public TCPResponseMessage(String senderId, String payload) {
+        this.payload = payload;
         this.senderId = senderId;
     }
 
@@ -15,12 +15,12 @@ public class TCPResponseMessage extends Message {
         return senderId;
     }
 
-    public byte[] getPayload() {
+    public String getPayload() {
         return payload;
     }
 
     @Override
     public String toString() {
-        return Arrays.toString(payload);
+        return payload;
     }
 }
