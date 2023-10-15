@@ -1,11 +1,11 @@
 package com.nhnacademy.node.http;
 
-import com.nhnacademy.message.HttpMessage;
-import com.nhnacademy.message.HttpRequestMessage;
 import com.nhnacademy.message.StringMessage;
 import com.nhnacademy.message.TCPResponseMessage;
 import com.nhnacademy.node.inout.InOutNode;
+import lombok.extern.log4j.Log4j2;
 
+@Log4j2
 public class ResponseMsgGeneratorNode extends InOutNode{
     private String CRLF = "\r\n";
 
@@ -17,7 +17,7 @@ public class ResponseMsgGeneratorNode extends InOutNode{
     protected void main(){
             if ((getInputWire(0) != null) && getInputWire(0).hasMessage()) {
             StringBuilder responseBuilder = new StringBuilder();
-            System.out.println("====ResponseMsgGeneratorNode====");
+            log.info("ResponseMsgGeneratorNode start");
 
             StringMessage inMessage = (StringMessage) getInputWire(0).get();
             String responseBody =  inMessage.getPayload();
@@ -28,8 +28,8 @@ public class ResponseMsgGeneratorNode extends InOutNode{
             responseBuilder.append(CRLF);
             responseBuilder.append(responseBody);
             
-            System.out.println(responseBuilder.toString());
             output(new TCPResponseMessage(inMessage.getSenderId(), responseBuilder.toString()));
+            log.info("ResponseMsgGeneratorNode end");
         }
     }
     

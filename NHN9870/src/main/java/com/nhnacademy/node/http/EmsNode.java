@@ -5,14 +5,13 @@ import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import com.nhnacademy.message.HttpMessage;
 import com.nhnacademy.message.HttpRequestMessage;
 import com.nhnacademy.message.TCPResponseMessage;
 import com.nhnacademy.node.inout.InOutNode;
+import lombok.extern.log4j.Log4j2;
 
+@Log4j2
 public class EmsNode extends InOutNode {
 
     JSONParser jsonParser = new JSONParser();
@@ -26,7 +25,7 @@ public class EmsNode extends InOutNode {
     protected void main() {
         if ((getInputWire(0) != null) && getInputWire(0).hasMessage()) {
 
-            System.out.println("====EmsNode====");
+            log.info("EmsNode start");
 
             HttpRequestMessage message = (HttpRequestMessage) getInputWire(0).get();
 
@@ -36,8 +35,6 @@ public class EmsNode extends InOutNode {
                     BufferedReader reader =
                             new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
-                System.out.println("socket 완료");
-                System.out.println(message.getHttpRequest());
                 writer.write(
                         message.getHttpRequest() + System.lineSeparator() + System.lineSeparator());
                 writer.flush();
@@ -73,11 +70,10 @@ public class EmsNode extends InOutNode {
                 //     // 새로운 요청을 사용하여 다른 작업 수행
                 //     System.out.println("새 Path: " + newRequest);
                 // }
+                log.info("EmsNode end");
             } catch (Exception e) {
-                System.out.println("socket error");
+                log.error(e);
             }
-
-            // output(new HttpRequestMessage(request.getSenderId(), httpRequestString));
         }
     }
 }
